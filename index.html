@@ -17,13 +17,16 @@
         <input type="text" id="taskInput" class="form-control" placeholder="Dodaj nowe zadanie" />
         <button id="addTask" class="btn btn-primary">Dodaj</button>
       </div>
-      <ul id="taskList" class="list-group"></ul>
+      <ul id="taskList" class="list-group"ul>
     </div>
-
+  
     <script>
+      var taskNumber=0;
       $(document).ready(function () {
         $("#addTask").click(function () {
+          taskNumber++;
           let taskText = $("#taskInput").val().trim();
+          taskText = taskNumber + ". " + taskText;
           if (taskText !== "") {
             let taskItem = $(
               '<li class="list-group-item d-flex justify-content-between align-items-center"></li>'
@@ -32,6 +35,7 @@
             let removeButton = $('<button class="btn btn-danger btn-sm">Usuń</button>');
             removeButton.click(function () {
               $(this).parent().remove();
+              taskNumber--;
             });
             taskItem.append(removeButton);
             $("#taskList").append(taskItem);
