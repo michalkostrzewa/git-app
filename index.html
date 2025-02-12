@@ -9,8 +9,14 @@
       rel="stylesheet"
     />
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+      h2
+      {
+        text-align: center;
+      }
+    </style>
   </head>
-  <body>
+  <body class="bg-dark text-light">
     <div class="container mt-5">
       <h2 class="mb-4">Lista zadań</h2>
       <div class="input-group mb-3">
@@ -22,18 +28,29 @@
 
     <script>
       $(document).ready(function () {
+        
+        let taskCounter = 1;
+
+      
         $("#addTask").click(function () {
           let taskText = $("#taskInput").val().trim();
+
           if (taskText !== "") {
-            let taskItem = $(
-              '<li class="list-group-item d-flex justify-content-between align-items-center"></li>'
-            );
-            taskItem.text(taskText);
+           
+            let taskItem = $(`
+              <li class="list-group-item d-flex justify-content-between align-items-center">
+                <span>${taskCounter}. ${taskText}</span>
+              </li>
+            `);
+
+           
             let removeButton = $('<button class="btn btn-danger btn-sm">Usuń</button>');
             let editButton = $('<button id="" class="btn btn-success bt-sm">Edytcja</button>');
             removeButton.click(function () {
               $(this).parent().remove();
+              updateTaskNumbers(); 
             });
+<<<<<<< HEAD
             editButton.click(function () {
               let taskItem = $(this).parent(); // Pobranie elementu <li>
               let currentText = taskItem.contents().first().text().trim(); // Pobranie tekstu zadania (bez przycisków)
@@ -43,14 +60,34 @@
                 taskItem.contents().first().replaceWith(newText); // Zastąpienie starego tekstu nowym
               }
             });
+=======
+>>>>>>> main
 
             taskItem.append(removeButton);
             taskItem.append(editButton);
             $("#taskList").append(taskItem);
+
+      
+            taskCounter++;
+
+           
             $("#taskInput").val("");
+
+          
+            updateTaskNumbers();
           }
 
         });
+
+        
+        function updateTaskNumbers() {
+          $("#taskList li").each(function (index) {
+           
+            let taskText = $(this).find('span').text().split('. ').slice(1).join('. ');
+        
+            $(this).find('span').text((index + 1) + ". " + taskText);
+          });
+        }
       });
     </script>
   </body>
