@@ -22,22 +22,51 @@
 
     <script>
       $(document).ready(function () {
+        
+        let taskCounter = 1;
+
+      
         $("#addTask").click(function () {
           let taskText = $("#taskInput").val().trim();
+
           if (taskText !== "") {
-            let taskItem = $(
-              '<li class="list-group-item d-flex justify-content-between align-items-center"></li>'
-            );
-            taskItem.text(taskText);
+           
+            let taskItem = $(`
+              <li class="list-group-item d-flex justify-content-between align-items-center">
+                <span>${taskCounter}. ${taskText}</span>
+              </li>
+            `);
+
+           
             let removeButton = $('<button class="btn btn-danger btn-sm">Usuń</button>');
             removeButton.click(function () {
               $(this).parent().remove();
+              updateTaskNumbers(); 
             });
+
             taskItem.append(removeButton);
             $("#taskList").append(taskItem);
+
+      
+            taskCounter++;
+
+           
             $("#taskInput").val("");
+
+          
+            updateTaskNumbers();
           }
         });
+
+        
+        function updateTaskNumbers() {
+          $("#taskList li").each(function (index) {
+           
+            let taskText = $(this).find('span').text().split('. ').slice(1).join('. ');
+        
+            $(this).find('span').text((index + 1) + ". " + taskText);
+          });
+        }
       });
     </script>
   </body>
