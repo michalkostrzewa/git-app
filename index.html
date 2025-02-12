@@ -16,9 +16,10 @@
       }
     </style>
   </head>
-  <body class="bg-dark text-light">
+  <body>
     <div class="container mt-5">
       <h2 class="mb-4">Lista zadań</h2>
+      <Button onclick="przelacz()" style="border-radius: 20px;">Zmień motyw</Button>
       <div class="input-group mb-3">
         <input type="text" id="taskInput" class="form-control" placeholder="Dodaj nowe zadanie" />
         <button id="addTask" class="btn btn-primary">Dodaj</button>
@@ -27,6 +28,20 @@
     </div>
 
     <script>
+      var changeTheme=0;
+      function przelacz() {
+        if (changeTheme==0) {
+        document.body.style.backgroundColor = "#222";
+        document.body.style.color = "white";
+        changeTheme=1
+        }
+        else {
+          document.body.style.backgroundColor = "white";
+        document.body.style.color = "#222";
+        changeTheme=0
+        }
+
+      }
       $(document).ready(function () {
         
         let taskCounter = 1;
