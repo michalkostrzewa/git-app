@@ -30,13 +30,26 @@
             );
             taskItem.text(taskText);
             let removeButton = $('<button class="btn btn-danger btn-sm">Usuń</button>');
+            let editButton = $('<button id="" class="btn btn-success bt-sm">Edytcja</button>');
             removeButton.click(function () {
               $(this).parent().remove();
             });
+            editButton.click(function () {
+              let taskItem = $(this).parent(); // Pobranie elementu <li>
+              let currentText = taskItem.contents().first().text().trim(); // Pobranie tekstu zadania (bez przycisków)
+              let newText = prompt("Edytuj zadanie:", currentText); // Okno do wpisania nowego tekstu
+
+              if (newText) {  
+                taskItem.contents().first().replaceWith(newText); // Zastąpienie starego tekstu nowym
+              }
+            });
+
             taskItem.append(removeButton);
+            taskItem.append(editButton);
             $("#taskList").append(taskItem);
             $("#taskInput").val("");
           }
+
         });
       });
     </script>
