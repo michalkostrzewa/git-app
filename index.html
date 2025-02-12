@@ -10,9 +10,12 @@
     />
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <style>
-      h2
-      {
+      h2 {
         text-align: center;
+      }
+      .completed {
+        text-decoration: line-through;
+        color: gray;
       }
     </style>
   </head>
@@ -28,7 +31,6 @@
 
     <script>
       $(document).ready(function () {
-        
         let taskCounter = 1;
 
       
@@ -36,7 +38,6 @@
           let taskText = $("#taskInput").val().trim();
 
           if (taskText !== "") {
-           
             let taskItem = $(`
               <li class="list-group-item d-flex justify-content-between align-items-center">
                 <span>${taskCounter}. ${taskText}</span>
@@ -50,26 +51,32 @@
               updateTaskNumbers(); 
             });
 
+          
+            let completeButton = $('<button class="btn btn-success btn-sm ms-2">Zakończ</button>');
+            completeButton.click(function () {
+              $(this).parent().toggleClass('completed');
+              if ($(this).parent().hasClass('completed')) {
+                $(this).text('Odznacz'); 
+              } else {
+                $(this).text('Zakończ'); 
+              }
+            });
+
             taskItem.append(removeButton);
+            taskItem.append(completeButton);
             $("#taskList").append(taskItem);
 
-      
-            taskCounter++;
+            taskCounter++; 
+            $("#taskInput").val(""); 
 
-           
-            $("#taskInput").val("");
-
-          
             updateTaskNumbers();
           }
         });
 
-        
+       
         function updateTaskNumbers() {
           $("#taskList li").each(function (index) {
-           
             let taskText = $(this).find('span').text().split('. ').slice(1).join('. ');
-        
             $(this).find('span').text((index + 1) + ". " + taskText);
           });
         }
